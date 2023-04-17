@@ -3,14 +3,9 @@ import { Collapse } from 'solid-collapse'
 import ChevronIcon from './ChevronIcon'
 import { Divider } from '../Divider'
 
-const dataBrokerList = [
-  {
-    description:
-      'Connected to over 180 Supply platforms across all media formats, BidSwitch listens to the entire global programmatic bidstream processing, filtering for fraud & classifying it-- layering on data and other services, then intelligently distributing it to relevant buyers across more than 220 Demand Side Technology platforms – all in real-time.',
-    tags: ['Contact Info', 'Career Info', 'Browsing Habits', 'Purchases'],
-    company: 'BidSwitch'
-  }
-]
+const temp = ["BidSwitch", "VUUKLE", "Bookyourdata", "Censia", "Cowen", "Diligent", "EproDirect", "Fetcher", "FourLeafDatra", "Growbots", "Intalytics", "Liveintent", "MaxMind", "PacificEast", "PitchBook", "PubMatric", "PushHint", "RecruitBot", "RocketReach", "SalesIntel", "SwordFish", "Tech target", "UpLead", "VenPath", "W20", "Yansi", "Abalta", "Exactag", "Ermes", "adsquare", "Cint", "Confiant", "AdDefend", "Fifty", "AdElement", "Arkeero", "GfK", "Smartology", "GADSME", "Sonobi", "Shopalyst", "Alesco", "Milestone Marketing Solutions", "Sync.me", "FullContact", "Smart Traffik", "MediaSoft", "Optimal Fusion", "Spokeo", "Entelo", "Dice", "Comscore", "Findmypast", "True Influence", "Cybba", "Bliss Point Media", "Connext Digital", "ID5", "IntentMacro", "Pop Acta Media"]
+
+const dataBrokerList = temp.sort().map((company) => { return {description: "", tags: [], company} })
 
 const DataBrokerList = () => {
   const [areOpen, setAreOpen] = createSignal(dataBrokerList.map(() => false))
