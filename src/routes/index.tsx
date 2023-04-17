@@ -17,6 +17,7 @@ export default function Home() {
           </p>
           <p>It's provided without any guarantees or support</p>
           <p class='mt-5'>A data broker collects and crawls the internet for information, that they can bundle and sell to 3rd parties. The third parties can then use the information collected how they like.</p>
+          <p>See the source code <a target="_blank" href="https://github.com/visible-cx/databroker_remover">here</a></p>
         </div>
         <Divider verticalPadding={`my-12`} />
         <SignUpWrapper />
