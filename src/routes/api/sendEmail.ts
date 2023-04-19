@@ -34,7 +34,6 @@ function sendEmail({ email, details, companyEmail, companyName }) {
     },
     Template: 'CompanyEmail',
     TemplateData: JSON.stringify(templateData),
-    ConfigurationSetName: 'rendering',
     Source: 'requests@visiblelabs.org',
     ReplyToAddresses: [email], 
     ReturnPath: 'bounce@plzdelete.me',
