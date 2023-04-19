@@ -93,6 +93,7 @@ export async function POST({ request }) {
             }),
             Source: "requests@visiblelabs.org",
             Template: templateName,
+            ReplyToAddresses: [email]
           });
       };
 
