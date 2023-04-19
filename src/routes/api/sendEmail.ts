@@ -7,12 +7,18 @@ import {
 import Dayjs from 'dayjs'
 import { SESClient, SendTemplatedEmailCommand } from '@aws-sdk/client-ses'
 
+const credentials = {
+  accessKeyId: import.meta.env.AWS_SDK_ACCESS_KEY_ID,
+  secretAccessKey: import.meta.env.AWS_SDK_SECRET_ACCESS_KEY,
+};
+
 const client = new DynamoDBClient({
   region: import.meta.env.VITE_AWS_REGION
 })
 
 const sesClient = new SESClient({
-  region: import.meta.env.VITE_AWS_REGION
+  region: import.meta.env.VITE_AWS_REGION,
+   credentials: credentials,
 })
 
 function sendEmail({ email, details, companyEmail, companyName }) {
