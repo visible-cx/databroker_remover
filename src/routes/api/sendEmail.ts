@@ -15,7 +15,7 @@ const sesClient = new SESClient({
   region: import.meta.env.VITE_AWS_REGION
 })
 
-async function sendEmail({ email, details, companyEmail, companyName }) {
+function sendEmail({ email, details, companyEmail, companyName }) {
   const { name, street, city, country, postcode } = details
   const templateData = {
     name,
@@ -34,27 +34,26 @@ async function sendEmail({ email, details, companyEmail, companyName }) {
     },
     Template: 'CompanyEmail',
     TemplateData: JSON.stringify(templateData),
+    ConfigurationSetName: 'rendering',
     Source: 'requests@visiblelabs.org',
-    ReplyToAddresses: [email]
+    ReplyToAddresses: [email], 
+    ReturnPath: 'bounce@plzdelete.me',
   }
+
 
   const command = new SendTemplatedEmailCommand(params)
 
-  try {
-    const data = await sesClient.send(command)
-    return data.MessageId !== undefined
-  } catch (err) {
-    console.log(err)
-    return false
-  }
+  sesClient.send(command)
+  .then((data) => {console.log("I AM THE DATA NOW", data)})
+  .catch((err) => {console.log("I AM THE ERROR NOW", err)})
+
 }
 
-const companies = [
-  {
-    name: 'Company 1',
-    email: ''
-  },
-]
+const companies = import.meta.env.VITE_COMPANIES.split(':').map((company) => {
+  const [name, email] = company.split(',')
+  return { name, email }
+})
+
 
 export async function POST({ request }) {
   const body = await new Response(request.body).json()
@@ -101,8 +100,8 @@ export async function POST({ request }) {
 
       await client.send(command)
 
-      companies.forEach(async (company) => {
-        await sendEmail({
+      companies.forEach((company) => {
+       sendEmail({
           email,
           details: {
             name,
