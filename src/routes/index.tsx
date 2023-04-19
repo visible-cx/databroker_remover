@@ -32,7 +32,7 @@ export default function Home() {
               generate the email to send to the broker. We do not store this
               information
             </li>
-            <li>4. We send the emails out</li>
+            <li>4. We send the emails out. You will be CC'd on them so you can see them, you don't need to take any action.</li>
             <li>
               5. Only your email address is stored, and is deleted after 45
               days. This is to ensure you don't send out multiple emails.
