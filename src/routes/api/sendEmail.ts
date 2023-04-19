@@ -5,54 +5,17 @@ import {
   UpdateItemCommand
 } from '@aws-sdk/client-dynamodb'
 import Dayjs from 'dayjs'
-import { SESClient, SendTemplatedEmailCommand } from '@aws-sdk/client-ses'
+import { SESClient, SendBulkTemplatedEmailCommand } from '@aws-sdk/client-ses'
 
-const credentials = {
-  accessKeyId: import.meta.env.AWS_SDK_ACCESS_KEY_ID,
-  secretAccessKey: import.meta.env.AWS_SDK_SECRET_ACCESS_KEY,
-};
 
 const client = new DynamoDBClient({
   region: import.meta.env.VITE_AWS_REGION
 })
 
 const sesClient = new SESClient({
-  region: import.meta.env.VITE_AWS_REGION,
-   credentials: credentials,
+  region: import.meta.env.VITE_AWS_REGION
 })
 
-function sendEmail({ email, details, companyEmail, companyName }) {
-  const { name, street, city, country, postcode } = details
-  const templateData = {
-    name,
-    street,
-    city,
-    country,
-    postcode,
-    email,
-    companyName
-  }
-
-  const params = {
-    Destination: {
-      ToAddresses: [companyEmail],
-      CcAddresses: [email]
-    },
-    Template: 'CompanyEmail',
-    TemplateData: JSON.stringify(templateData),
-    Source: 'requests@visiblelabs.org',
-    ReplyToAddresses: [email], 
-    ReturnPath: 'bounce@plzdelete.me',
-  }
-
-
-  const command = new SendTemplatedEmailCommand(params)
-
-  sesClient.send(command)
-  .then((data) => {console.log("I AM THE DATA NOW", data)})
-  .catch((err) => {console.log("I AM THE ERROR NOW", err)})
-
-}
 
 const companies = import.meta.env.VITE_COMPANIES.split(':').map((company) => {
   const [name, email] = company.split(',')
@@ -64,8 +27,6 @@ export async function POST({ request }) {
   const body = await new Response(request.body).json()
 
   const { email, details } = body
-  const { name, street, city, country, postcode } = details
-
   const params = {
     TableName: import.meta.env.VITE_TABLE_NAME,
     Key: {
@@ -105,22 +66,48 @@ export async function POST({ request }) {
 
       await client.send(command)
 
-      companies.forEach((company) => {
-       sendEmail({
-          email,
-          details: {
-            name,
-            street,
-            city,
-            country,
-            postcode
-          },
-          companyEmail: company.email,
-          companyName: company.name
-        })
-      })
+      const { name, street, city, country, postcode } = details
 
-      return json({ success: true })
+      const createBulkSendCommand = (companies, templateName) => {
+          return new SendBulkTemplatedEmailCommand({
+            Destinations: companies.map((company) => ({
+              Destination: { ToAddresses: [company.email], CcAddresses: [email] },
+              ReplacementTemplateData: JSON.stringify({
+                name,
+                street,
+                city,
+                country,
+                postcode,
+                email,
+                companyName: company.name
+              }),
+            })),
+            DefaultTemplateData: JSON.stringify({
+              name: 'John Doe',
+              street: '123 Main St',
+              city: 'Anytown',
+              country: 'USA',
+              postcode: '12345',
+              email: 'example@example.com',
+              companyName: "Acme"
+            }),
+            Source: "requests@visiblelabs.org",
+            Template: templateName,
+          });
+      };
+
+      const bulkSendCommand = createBulkSendCommand(companies, "CompanyEmail");
+
+      try {
+        const result = await sesClient.send(bulkSendCommand);
+        console.log("result", result);
+        return json({ success: true})
+      }
+      catch (err) {
+        console.log(err)
+        return json({ success: false, error: 'Something went wrong'})
+      }
+
     } else {
       return json({
         success: false,
