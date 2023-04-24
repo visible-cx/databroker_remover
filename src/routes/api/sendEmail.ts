@@ -7,7 +7,6 @@ import {
 import Dayjs from 'dayjs'
 import { SESClient, SendBulkTemplatedEmailCommand } from '@aws-sdk/client-ses'
 
-
 const client = new DynamoDBClient({
   region: import.meta.env.VITE_AWS_REGION
 })
@@ -22,11 +21,11 @@ const companies = import.meta.env.VITE_COMPANIES.split(':').map((company) => {
   return { name, email }
 })
 
-
 export async function POST({ request }) {
   const body = await new Response(request.body).json()
 
   const { email, details } = body
+
   const params = {
     TableName: import.meta.env.VITE_TABLE_NAME,
     Key: {
@@ -97,17 +96,32 @@ export async function POST({ request }) {
           });
       };
 
-      const bulkSendCommand = createBulkSendCommand(companies, "CompanyEmail");
+      const splitCompaniesIntoChunks = (companies, chunkSize) => {
+        const chunks = [];
+        for (let i = 0; i < companies.length; i += chunkSize) {
+          chunks.push(companies.slice(i, i + chunkSize));
+        }
+        return chunks;
+      };
 
-      try {
-        const result = await sesClient.send(bulkSendCommand);
-        console.log("result", result);
-        return json({ success: true})
+      const chunks = splitCompaniesIntoChunks(companies, 50);
+
+      for (const chunk of chunks) {
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        const bulkSendCommand = createBulkSendCommand(chunk, "CompanyEmail");
+        try {
+          const result = await sesClient.send(bulkSendCommand);
+          console.log("result", result);
+        }
+        catch (err) {
+          console.log(err)
+          return json({ success: false, error: 'Something went wrong'})
+        }
       }
-      catch (err) {
-        console.log(err)
-        return json({ success: false, error: 'Something went wrong'})
-      }
+
+
+      return json({ success: true})
+
 
     } else {
       return json({
