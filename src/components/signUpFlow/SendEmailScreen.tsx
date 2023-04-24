@@ -85,7 +85,7 @@ function SendEmail({ setStage, setError, details }) {
             Change Info
           </button>
           <button
-            class="bg-blue-500 text-white rounded-md p-5 m-auto min-w-[3rem]"
+            class="bg-blue-500 text-white rounded-md p-5 m-auto min-w-[3rem] disabled:bg-gray-300"
             onClick={(event) => handleSendEmail(event)}
             disabled={sending()}
           >
