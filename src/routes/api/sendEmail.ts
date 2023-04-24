@@ -104,10 +104,10 @@ export async function POST({ request }) {
         return chunks;
       };
 
-      const chunks = splitCompaniesIntoChunks(companies, 50);
+      const chunks = splitCompaniesIntoChunks(companies, 25);
 
       for (const chunk of chunks) {
-        await new Promise((resolve) => setTimeout(resolve, 1200));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const bulkSendCommand = createBulkSendCommand(chunk, "CompanyEmail");
         try {
           const result = await sesClient.send(bulkSendCommand);
