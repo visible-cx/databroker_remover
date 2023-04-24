@@ -29,13 +29,12 @@ export default function Home() {
             <li>2. We'll send you a verification code</li>
             <li>
               3. Once you confirm the code, you can input your name & address to
-              generate the email to send to the broker. We do not store this
-              information
+              generate the email to send to the broker. We do not store your name or address, it is only used to generate the email.
             </li>
             <li>4. We send the emails out. You will be CC'd on them so you can see them, you don't need to take any action.</li>
             <li>
               5. Only your email address is stored, and is deleted after 45
-              days. This is to ensure you don't send out multiple emails.
+              days. This is to ensure you don't send out multiple emails within a short period of time. You're free to repeat the process after 45 days.
             </li>
           </ul>
         </div>
