@@ -5,7 +5,8 @@ import {
   UpdateItemCommand
 } from '@aws-sdk/client-dynamodb'
 import Dayjs from 'dayjs'
-import { SESClient, SendBulkTemplatedEmailCommand } from '@aws-sdk/client-ses'
+import { SESClient, SendTemplatedEmailCommand, SendBulkTemplatedEmailCommand } from '@aws-sdk/client-ses'
+import crypto from 'crypto'
 
 const client = new DynamoDBClient({
   region: import.meta.env.VITE_AWS_REGION
@@ -26,10 +27,16 @@ export async function POST({ request }) {
 
   const { email, details } = body
 
+  if (!email) return json({ success: false })
+
+  const hash = crypto.createHash('sha256')
+  hash.update(email)
+  const hashedEmail = hash.digest('hex')
+
   const params = {
     TableName: import.meta.env.VITE_TABLE_NAME,
     Key: {
-      id: { S: email }
+      id: { S: hashedEmail }
     }
   }
 
@@ -52,7 +59,7 @@ export async function POST({ request }) {
       const params = {
         TableName: import.meta.env.VITE_TABLE_NAME,
         Key: {
-          id: { S: email }
+          id: { S: hashedEmail }
         },
         UpdateExpression: 'SET lastSent = :lastSent, dateDate = :dateDate',
         ExpressionAttributeValues: {

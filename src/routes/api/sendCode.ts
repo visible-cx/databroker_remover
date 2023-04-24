@@ -22,10 +22,14 @@ export async function POST({ request }) {
   const { email } = body
   if (!email) return json({ success: false })
 
+  const hash = crypto.createHash('sha256')
+  hash.update(email)
+  const hashedEmail = hash.digest('hex')
+  console.log(hashedEmail)
   const checkIfEmailExistsParams = {
     TableName: import.meta.env.VITE_TABLE_NAME,
     Key: {
-      id: { S: email }
+      id: { S: hashedEmail }
     }
   }
 
@@ -40,13 +44,14 @@ export async function POST({ request }) {
       })
     }
   } catch (err) {
+    console.log(err)
     return json({ success: false, error: 'Something went wrong' })
   }
 
   const params = {
     TableName: import.meta.env.VITE_TABLE_NAME,
     Item: {
-      id: { S: email },
+      id: { S: hashedEmail },
       code: { S: otpCode }
     }
   }
@@ -75,6 +80,7 @@ export async function POST({ request }) {
     await sesClient.send(sesSendTemplateCommand)
     return json({ success: true })
   } catch (err) {
+    console.log(err)
     return json({ success: false, error: 'Something went wrong' })
   }
 }

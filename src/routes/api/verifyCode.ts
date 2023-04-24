@@ -1,5 +1,6 @@
 import { json } from 'solid-start/api'
 import { DynamoDBClient, GetItemCommand, UpdateItemCommand } from '@aws-sdk/client-dynamodb'
+import crypto from 'crypto'
 
 const client = new DynamoDBClient({
   region: import.meta.env.VITE_AWS_REGION
@@ -10,10 +11,16 @@ export async function POST({ request }) {
 
   const { email, code } = body
 
+  if (!email || !code) return json({ success: false })
+
+  const hash = crypto.createHash('sha256')
+  hash.update(email)
+  const hashedEmail = hash.digest('hex')
+  console.log(hashedEmail)
   const params = {
     TableName: import.meta.env.VITE_TABLE_NAME,
     Key: {
-      id: { S: email }
+      id: { S: hashedEmail }
     }
   }
 
@@ -27,7 +34,7 @@ export async function POST({ request }) {
       const params = {
         TableName: import.meta.env.VITE_TABLE_NAME,
         Key: {
-          id: { S: email }
+          id: { S: hashedEmail }
         },
         UpdateExpression: 'SET verified = :verified',
         ExpressionAttributeValues: {
