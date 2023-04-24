@@ -16,8 +16,10 @@ export default function Home() {
             them to remove you from their databases{' '}
           </p>
           <p>It's provided without any guarantees or support</p>
+          <p>We don't store any readable information, only a hashed version of your email to prevent spamming the data brokers </p>
           <p class='mt-5'>A data broker crawls the internet for information as well as buying it from companies whose services you use, the broker then bundles it up and uses it or sells it on to 3rd parties. The third parties can then use the information collected how they like.</p>
-          <p>See the source code <a target="_blank" class="font-bold" href="https://github.com/visible-cx/databroker_remover">here</a></p>
+          <br/>
+          <p>See the source code <a target="_blank" class="font-bold" href="https://github.com/visible-cx/databroker_remover">here</a>. The privacy policy for this tool can be found <a class="font-bold" href="/privacy" target="_blank">here </a>  </p>
         </div>
         <Divider verticalPadding={`my-12`} />
         <SignUpWrapper />
@@ -33,7 +35,7 @@ export default function Home() {
             </li>
             <li>4. We send the emails out. You will be CC'd on them so you can see them, you don't need to take any action.</li>
             <li>
-              5. Only your email address is stored, and is deleted after 45
+              5. Only your email address is stored once it has been hashed (SHA256), and is deleted after 45
               days. This is to ensure you don't send out multiple emails within a short period of time. You're free to repeat the process after 45 days.
             </li>
           </ul>
