@@ -115,7 +115,6 @@ export async function POST({ request }) {
         }
         catch (err) {
           console.log(err)
-          return json({ success: false, error: 'Something went wrong'})
         }
       }
 
