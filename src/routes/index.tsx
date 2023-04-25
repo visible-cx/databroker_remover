@@ -9,8 +9,8 @@ export default function Home() {
     <>
       <Header />
       <main class="mb-20">
-        <div class="text-center p-5">
-          <h2 class="text-3xl mb-4">Data Broker Remover Tool</h2>
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl mb-4 text-center">Data Broker Remover Tool</h2>
           <p>
             This tool generates and sends emails to Data Brokers in order to get
             them to remove you from their databases{' '}
@@ -20,6 +20,8 @@ export default function Home() {
           <p class='mt-5'>A data broker crawls the internet for information as well as buying it from companies whose services you use, the broker then bundles it up and uses it or sells it on to 3rd parties. The third parties can then use the information collected how they like.</p>
           <br/>
           <p>See the source code <a target="_blank" class="font-bold" href="https://github.com/visible-cx/databroker_remover">here</a>. The privacy policy for this tool can be found <a class="font-bold" href="/privacy" target="_blank">here </a>  </p>
+          <br/>
+          <p>If you'd like to know more about the people who built this, and what we do most of the time you can find more about us <a href="https://www.visible.cx/join" target="_blank" class="font-bold">here</a></p>
         </div>
         <Divider verticalPadding={`my-12`} />
         <SignUpWrapper />
