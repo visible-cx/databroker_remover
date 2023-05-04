@@ -12,7 +12,7 @@ function SignUpWrapper() {
   const [details, setDetails] = createSignal({})
 
   return (
-    <section class="container mx-auto px-4">
+    <section class="container mx-auto p-4 border border-slate-200">
       {error && <p class="text-red-700 font-bold">{error}</p>}
       {stage() === 0 && (
         <EmailInput
