@@ -337,7 +337,7 @@ function GenerateEmail({ email, setStage, setDetails }) {
           class="bg-blue-500 text-white rounded-md p-2 mt-5"
           type="submit"
         >
-          Generate Email Template
+          Generate email template
         </button>
       </form>
     </div>

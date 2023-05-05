@@ -14,7 +14,7 @@ function SendEmail({ setStage, setError, details }) {
       details
     })
     if (response.success) {
-      navigate('/done')
+      navigate('/done', { state: { email } })
       setError('')
     } else {
       setError(response.error)
@@ -82,7 +82,7 @@ function SendEmail({ setStage, setError, details }) {
           class="bg-blue-500 text-white rounded-md p-5 m-auto min-w-[3rem]"
           onClick={() => setStage(2)}
         >
-          Change Info
+          Change info
         </button>
         <button
           class="bg-blue-500 text-white rounded-md p-5 m-auto min-w-[3rem] disabled:bg-gray-300"

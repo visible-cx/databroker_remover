@@ -25,7 +25,9 @@ export default function EmailInput({ setStage, setError, setEmail }) {
       <h2 class="text-2xl my-5 font-bold">Step 1</h2>
       <form onSubmit={handleRequestCode} class="grid justify-center gap-2">
         <label for="email">
-          Enter your email address to receive a 2FA code
+          Enter the email address you wish to have removed from data brokers.{' '}
+          <br />
+          You will receive a code to verify the email address.
         </label>
         <input
           id="email"
@@ -35,7 +37,7 @@ export default function EmailInput({ setStage, setError, setEmail }) {
           placeholder="Your email address"
         />
         <button class="bg-blue-500 text-white rounded-md p-2" type="submit">
-          Send Verification Code
+          Remove email
         </button>
         <p class="text-sm">
           We don't store any readable information, only a hashed version of your
