@@ -38,7 +38,6 @@ function SignUpWrapper() {
           details={details()}
         />
       )}
-      {stage() === 4 && <Done email={email()} />}
     </section>
   )
 }
