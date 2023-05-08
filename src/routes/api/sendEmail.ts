@@ -16,6 +16,7 @@ const sesClient = new SESClient({
   region: import.meta.env.VITE_AWS_REGION
 })
 
+const USFilter = ["Cowen"]
 
 const companies = import.meta.env.VITE_COMPANIES.split(':').map((company) => {
   const [name, email] = company.split(',')
@@ -24,6 +25,8 @@ const companies = import.meta.env.VITE_COMPANIES.split(':').map((company) => {
 
 export async function POST({ request }) {
   const body = await new Response(request.body).json()
+
+  let filteredCompanies = companies
 
   const { email, details } = body
 
@@ -74,6 +77,10 @@ export async function POST({ request }) {
 
       const { name, street, city, country, postcode } = details
 
+      if(country !== "US"){
+        filteredCompanies = filteredCompanies.filter((company) => !USFilter.includes(company.name))
+      }
+
       const createBulkSendCommand = (companies, templateName) => {
           return new SendBulkTemplatedEmailCommand({
             Destinations: companies.map((company) => ({
@@ -111,7 +118,7 @@ export async function POST({ request }) {
         return chunks;
       };
 
-      const chunks = splitCompaniesIntoChunks(companies, 25);
+      const chunks = splitCompaniesIntoChunks(filteredCompanies, 50);
 
       for (const chunk of chunks) {
         await new Promise((resolve) => setTimeout(resolve, 1000));
