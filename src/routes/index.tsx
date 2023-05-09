@@ -148,7 +148,7 @@ export default function Home() {
       <main class="mt-10">
         <div class="container mx-auto px-4 text-center mb-10">
           <Header />
-          <h1 class="text-5xl mb-20 mt-20 font-bold">
+          <h1 class="text-4xl mb-10 mt-10 font-bold">
             Data Broker
             <br />
             Remover Tool
@@ -159,8 +159,7 @@ export default function Home() {
             their own use, or sells it to 3rd parties. The third parties can
             then use the information collected how they like.
           </p>
-          <img src="break.png" class="mt-10 mb-10 mx-auto" width="50px" />
-          <p class="text-xl mb-20">
+          <p class="text-xl mt-5 mb-5">
             This tool generates and sends emails to Data Brokers in order to get
             them to remove you from their databases{' '}
           </p>
