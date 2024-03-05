@@ -42,7 +42,6 @@ export default function Home() {
     'VUUKLE',
     'Bookyourdata',
     'Censia',
-    'Cowen',
     'Diligent',
     'EproDirect',
     'Fetcher',
