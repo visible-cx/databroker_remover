@@ -33,7 +33,7 @@ export default function Home() {
     },
     {
       title: 'WHO BUILT THIS?',
-      answer: `<p>This tool was built by the team at Visible.</p><p>If you'd like to see more of what we do, please consider joining the community <a href="https://www.visible.cx/join" target="_blank" class="font-bold">here</a>.</p>`
+      answer: `<p>This tool was built by the team at Visible.</p><p>If you'd like to see more of what we do, please consider joining the community <a href="https://www.visible.cx" target="_blank" class="font-bold">here</a>.</p>`
     }
   ]
 
