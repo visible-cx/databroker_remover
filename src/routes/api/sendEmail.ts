@@ -75,7 +75,7 @@ export async function POST({ request }) {
 
       await client.send(command)
 
-      const { name, street, city, country, postcode } = details
+      const { name, street, city, country, postcode, phone } = details
 
       if(country !== "US"){
         filteredCompanies = filteredCompanies.filter((company) => !USFilter.includes(company.name))
@@ -92,6 +92,7 @@ export async function POST({ request }) {
                 country,
                 postcode,
                 email,
+				phone,
                 companyName: company.name
               }),
             })),
@@ -102,6 +103,7 @@ export async function POST({ request }) {
               country: 'USA',
               postcode: '12345',
               email: 'example@example.com',
+			  phone: '123-456-7890',
               companyName: "Acme"
             }),
             Source: "requests@visiblelabs.org",

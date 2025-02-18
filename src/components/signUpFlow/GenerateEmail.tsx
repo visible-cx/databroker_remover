@@ -9,13 +9,15 @@ function GenerateEmail({ email, setStage, setDetails }) {
     const city = event.target.city.value
     const country = event.target.country.value
     const postcode = event.target.zip.value
+	const phone = event.target.phone.value
     const details = {
       name,
       street,
       city,
       country,
       postcode,
-      email
+      email,
+	  phone
     }
     setDetails(details)
     setStage(3)
@@ -39,6 +41,15 @@ function GenerateEmail({ email, setStage, setDetails }) {
             autoComplete="email"
             required
             value={email}
+            disabled
+          />
+		  <TextField
+            label="Phone number"
+            id="phone"
+            name="phone"
+            type="text"
+            autoComplete="phone"            
+            value={phone}
             disabled
           />
           <TextField
