@@ -3,7 +3,7 @@ import { Collapse } from 'solid-collapse'
 import ChevronIcon from './ChevronIcon'
 import { Divider } from '../Divider'
 
-const temp = ["BidSwitch", "VUUKLE", "Bookyourdata", "Censia", "Cowen", "Diligent", "EproDirect", "Fetcher", "FourLeafDatra", "Growbots", "Intalytics", "Liveintent", "MaxMind", "PacificEast", "PitchBook", "PubMatric", "PushHint", "RecruitBot", "RocketReach", "SalesIntel", "SwordFish", "Tech target", "UpLead", "VenPath", "W20", "Yansi", "Abalta", "Exactag", "Ermes", "adsquare", "Cint", "Confiant", "AdDefend", "Fifty", "AdElement", "Arkeero", "GfK", "Smartology", "GADSME", "Sonobi", "Shopalyst", "Alesco", "Milestone Marketing Solutions", "Sync.me", "FullContact", "Smart Traffik", "MediaSoft", "Optimal Fusion", "Spokeo", "Entelo", "Dice", "Comscore", "Findmypast", "True Influence", "Cybba", "Bliss Point Media", "Connext Digital", "ID5", "IntentMacro", "Pop Acta Media"]
+const temp = ["BidSwitch", "VUUKLE", "Bookyourdata", "Censia", "Cowen", "Diligent", "EproDirect", "Fetcher", "FourLeafDatra", "Growbots", "Intalytics", "Liveintent", "MaxMind", "PacificEast", "PitchBook", "PubMatric", "PushHint", "RecruitBot", "RocketReach", "SalesIntel", "SwordFish", "Tech target", "UpLead", "VenPath", "W20", "Yansi", "Abalta", "Exactag", "Ermes", "adsquare", "Cint", "AdDefend", "Fifty", "AdElement", "Arkeero", "GfK", "Smartology", "GADSME", "Sonobi", "Shopalyst", "Alesco", "Milestone Marketing Solutions", "Sync.me", "FullContact", "Smart Traffik", "MediaSoft", "Optimal Fusion", "Spokeo", "Entelo", "Dice", "Comscore", "Findmypast", "True Influence", "Cybba", "Bliss Point Media", "Connext Digital", "ID5", "IntentMacro", "Pop Acta Media"]
 
 const dataBrokerList = temp.sort().map((company) => { return {description: "", tags: [], company} })
 
