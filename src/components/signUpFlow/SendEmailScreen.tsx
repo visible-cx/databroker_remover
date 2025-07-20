@@ -3,7 +3,7 @@ import { sendPostRequest } from '~/lib/utils'
 import { useNavigate } from 'solid-start'
 
 function SendEmail({ setStage, setError, details }) {
-  const { name, street, city, country, postcode, email } = details
+  const { name, street, city, country, postcode, email, phone } = details
   const [sending, setSending] = createSignal(false)
   const navigate = useNavigate()
   const handleSendEmail = async (event) => {
@@ -62,6 +62,8 @@ function SendEmail({ setStage, setError, details }) {
             <br />
             <strong>E-mail address: </strong>
             {email}
+			<strong>Phone: </strong>
+            {phone}
           </p>
           <br />
           <p dir="ltr">
