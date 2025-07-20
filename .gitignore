@@ -22,6 +22,7 @@ gitignore
 Thumbs.db
 
 .env*
+!.env.example
 # vercel
 .vercel
 
