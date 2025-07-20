@@ -18,3 +18,8 @@ This is a tool to generate and send emails to data brokers to remove your detail
 ## Deploy Your Own
 
 It's open source so you can deploy and run it yourself if you wish.
+
+1. Run `yarn install`
+2. Create env file using the example
+3. Run `yarn run dev` for the development server 
+
