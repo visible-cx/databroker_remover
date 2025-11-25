@@ -1,32 +1,34 @@
-dist
-worker
-.solid
-.vercel
-.output
-
-# dependencies
+# Dependencies
 /node_modules
+/.pnp
+.pnp.js
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-*.launch
-.settings/
+# Testing
+/coverage
 
-# Temp
-gitignore
+# Next.js
+/.next/
+/out/
 
-# System Files
+# Production
+/build
+
+# Misc
 .DS_Store
-Thumbs.db
+*.pem
 
-.env*
-# vercel
-.vercel
-
-# debug
+# Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+
+# Local env files
+.env*.local
+.env
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts

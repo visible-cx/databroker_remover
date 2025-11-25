@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom colors for Visible theme */
+.text-warmgray {
+  color: #e5e7eb;
+}
+
+.text-warmgray\/70 {
+  color: rgba(229, 231, 235, 0.7);
+}
+
+.text-warmgray\/80 {
+  color: rgba(229, 231, 235, 0.8);
+}
+
+.text-warmgray\/90 {
+  color: rgba(229, 231, 235, 0.9);
+}
+
+.bg-plum-900 {
+  background-color: #2E2A44;
+}
+
+.bg-plum-800 {
+  background-color: #3f3a5a;
+}
+
+.bg-plum-700 {
+  background-color: #4f4a6a;
+}
+
+.bg-plum-600 {
+  background-color: #5f5a7a;
+}
+
+.bg-plum-500 {
+  background-color: #6f6a8a;
+}
+
+.border-plum-700 {
+  border-color: #4f4a6a;
+}
+
+.border-plum-600 {
+  border-color: #5f5a7a;
+}
+
+.hover\:bg-plum-800:hover {
+  background-color: #3f3a5a;
+}
+
+.hover\:bg-plum-700:hover {
+  background-color: #4f4a6a;
+}
+
+.hover\:bg-plum-500:hover {
+  background-color: #6f6a8a;
+}

@@ -1,8 +1,0 @@
-{
-  "Template": {
-    "TemplateName": "VerificationCode",
-    "SubjectPart": "Your Verification Code",
-    "HtmlPart": "<p>Your verification code is:</p>\r\n<p><strong>{{code}}</strong></p>",
-    "TextPart": "Your verification code is {{code}}."
-  }
-}
