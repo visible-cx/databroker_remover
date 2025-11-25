@@ -52,20 +52,20 @@ aws dynamodb create-table \
     --attribute-definitions AttributeName=id,AttributeType=S \
     --key-schema AttributeName=id,KeyType=HASH \
     --billing-mode PAY_PER_REQUEST \
-    --region us-east-1
+    --region eu-west-2
 ```
 
 ### 2. Set Up SES Email Templates
 
 **Verify sender emails:**
 ```bash
-aws ses verify-email-identity --email-address noreply@yourdomain.com --region us-east-1
-aws ses verify-email-identity --email-address requests@yourdomain.com --region us-east-1
+aws ses verify-email-identity --email-address noreply@yourdomain.com --region eu-west-2
+aws ses verify-email-identity --email-address requests@yourdomain.com --region eu-west-2
 ```
 
 **Create VerificationCode template:**
 ```bash
-aws ses create-template --region us-east-1 --cli-input-json '{
+aws ses create-template --region eu-west-2 --cli-input-json '{
   "Template": {
     "TemplateName": "VerificationCode",
     "SubjectPart": "Your Verification Code",
@@ -77,7 +77,7 @@ aws ses create-template --region us-east-1 --cli-input-json '{
 
 **Create CompanyEmail template:**
 ```bash
-aws ses create-template --region us-east-1 --cli-input-json '{
+aws ses create-template --region eu-west-2 --cli-input-json '{
   "Template": {
     "TemplateName": "CompanyEmail",
     "SubjectPart": "Data Removal Request",
@@ -93,7 +93,7 @@ Edit `.env.local`:
 
 ```bash
 # AWS Configuration
-VITE_AWS_REGION=us-east-1
+VITE_AWS_REGION=eu-west-2
 VITE_TABLE_NAME=data-broker-remover-users
 
 # Data Broker Email List
