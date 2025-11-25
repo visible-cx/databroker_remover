@@ -1,30 +1,30 @@
-'use server';
+"use server";
 
-import {
-  GetItemCommand,
-  UpdateItemCommand,
-} from '@aws-sdk/client-dynamodb';
-import { SendBulkTemplatedEmailCommand } from '@aws-sdk/client-ses';
-import crypto from 'crypto';
-import dayjs from 'dayjs';
+import { GetItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { SendBulkTemplatedEmailCommand } from "@aws-sdk/client-ses";
+import crypto from "crypto";
+import dayjs from "dayjs";
 import {
   getDynamoDBClient,
   getSESClient,
   getTableName,
   getBrokerList,
   US_ONLY_BROKERS,
-} from '@/lib/data-broker-remover/aws-clients';
-import { SendEmailsResponse, UserDetails } from '@/lib/data-broker-remover/types';
+} from "@/lib/data-broker-remover/aws-clients";
+import {
+  SendEmailsResponse,
+  UserDetails,
+} from "@/lib/data-broker-remover/types";
 
 export async function sendEmails(
   email: string,
-  details: UserDetails
+  details: UserDetails,
 ): Promise<SendEmailsResponse> {
   try {
     // Hash email to match storage
-    const hash = crypto.createHash('sha256');
+    const hash = crypto.createHash("sha256");
     hash.update(email);
-    const hashedEmail = hash.digest('hex');
+    const hashedEmail = hash.digest("hex");
 
     const dynamoClient = getDynamoDBClient();
     const sesClient = getSESClient();
@@ -44,7 +44,7 @@ export async function sendEmails(
     if (!data.Item) {
       return {
         success: false,
-        error: 'Email not found. Please start over.',
+        error: "Email not found. Please start over.",
       };
     }
 
@@ -52,16 +52,16 @@ export async function sendEmails(
     if (!data.Item.verified || !data.Item.verified.BOOL) {
       return {
         success: false,
-        error: 'Email not verified. Please verify your email first.',
+        error: "Email not verified. Please verify your email first.",
       };
     }
 
     // Check if already sent within 45 days
     if (data.Item.lastSent) {
-      const lastSent = parseInt(data.Item.lastSent.N || '0');
+      const lastSent = parseInt(data.Item.lastSent.N || "0");
       const now = dayjs();
       const lastSentDate = dayjs.unix(lastSent);
-      const daysSinceLastSent = now.diff(lastSentDate, 'day');
+      const daysSinceLastSent = now.diff(lastSentDate, "day");
 
       if (daysSinceLastSent < 45) {
         const daysRemaining = 45 - daysSinceLastSent;
@@ -74,20 +74,22 @@ export async function sendEmails(
 
     // Get broker list and filter based on country
     let brokers = getBrokerList();
-    
-    if (details.country !== 'US') {
-      brokers = brokers.filter((broker) => !US_ONLY_BROKERS.includes(broker.name));
+
+    if (details.country !== "US") {
+      brokers = brokers.filter(
+        (broker) => !US_ONLY_BROKERS.includes(broker.name),
+      );
     }
 
     if (brokers.length === 0) {
       return {
         success: false,
-        error: 'No broker email addresses configured. Please contact support.',
+        error: "No broker email addresses configured. Please contact support.",
       };
     }
 
     // Split brokers into chunks of 50 (SES bulk limit)
-    const splitIntoChunks = <T,>(array: T[], chunkSize: number): T[][] => {
+    const splitIntoChunks = <T>(array: T[], chunkSize: number): T[][] => {
       const chunks: T[][] = [];
       for (let i = 0; i < array.length; i += chunkSize) {
         chunks.push(array.slice(i, i + chunkSize));
@@ -101,9 +103,9 @@ export async function sendEmails(
     for (const chunk of chunks) {
       const bulkCommand = new SendBulkTemplatedEmailCommand({
         Destinations: chunk.map((broker) => ({
-          Destination: { 
-            ToAddresses: ["ed+test@visible.tech"],//broker.email], 
-            CcAddresses: [email] 
+          Destination: {
+            ToAddresses: [broker.email],
+            CcAddresses: [email],
           },
           ReplacementTemplateData: JSON.stringify({
             name: details.name,
@@ -116,16 +118,16 @@ export async function sendEmails(
           }),
         })),
         DefaultTemplateData: JSON.stringify({
-          name: 'John Doe',
-          street: '123 Main St',
-          city: 'Anytown',
-          country: 'USA',
-          postcode: '12345',
-          email: 'example@example.com',
-          companyName: 'Acme',
+          name: "John Doe",
+          street: "123 Main St",
+          city: "Anytown",
+          country: "USA",
+          postcode: "12345",
+          email: "example@example.com",
+          companyName: "Acme",
         }),
-        Source: 'requests@visiblelabs.org',
-        Template: 'CompanyEmail',
+        Source: "requests@visiblelabs.org",
+        Template: "CompanyEmail",
         ReplyToAddresses: [email],
       });
 
@@ -143,10 +145,10 @@ export async function sendEmails(
       Key: {
         id: { S: hashedEmail },
       },
-      UpdateExpression: 'SET lastSent = :lastSent, dateDate = :dateDate',
+      UpdateExpression: "SET lastSent = :lastSent, dateDate = :dateDate",
       ExpressionAttributeValues: {
-        ':lastSent': { N: dayjs().unix().toString() },
-        ':dateDate': { N: dayjs().date().toString() },
+        ":lastSent": { N: dayjs().unix().toString() },
+        ":dateDate": { N: dayjs().date().toString() },
       },
     };
 
@@ -155,10 +157,10 @@ export async function sendEmails(
 
     return { success: true };
   } catch (error) {
-    console.error('Error sending emails:', error);
+    console.error("Error sending emails:", error);
     return {
       success: false,
-      error: 'Failed to send emails. Please try again or contact support.',
+      error: "Failed to send emails. Please try again or contact support.",
     };
   }
 }
