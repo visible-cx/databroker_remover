@@ -1,54 +1,54 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { EmailStep } from './EmailStep';
-import { VerifyStep } from './VerifyStep';
-import { DetailsStep } from './DetailsStep';
-import { ReviewStep } from './ReviewStep';
-import { WizardStep, UserDetails } from '@/lib/data-broker-remover/types';
-import { Card } from '@/components/ui/card';
+import { useState } from "react";
+import { EmailStep } from "./EmailStep";
+import { VerifyStep } from "./VerifyStep";
+import { DetailsStep } from "./DetailsStep";
+import { ReviewStep } from "./ReviewStep";
+import { WizardStep, UserDetails } from "@/lib/data-broker-remover/types";
+import { Card } from "@/components/ui/card";
 
 interface DataBrokerWizardProps {
   onStepChange?: (step: WizardStep) => void;
 }
 
 export function DataBrokerWizard({ onStepChange }: DataBrokerWizardProps) {
-  const [step, setStep] = useState<WizardStep>('email');
-  const [email, setEmail] = useState('');
+  const [step, setStep] = useState<WizardStep>("email");
+  const [email, setEmail] = useState("");
   const [details, setDetails] = useState<UserDetails | null>(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleEmailSubmit = (emailValue: string) => {
     setEmail(emailValue);
-    const newStep: WizardStep = 'verify';
+    const newStep: WizardStep = "verify";
     setStep(newStep);
     onStepChange?.(newStep);
-    setError('');
+    setError("");
   };
 
   const handleVerifySuccess = () => {
-    const newStep: WizardStep = 'details';
+    const newStep: WizardStep = "details";
     setStep(newStep);
     onStepChange?.(newStep);
-    setError('');
+    setError("");
   };
 
   const handleDetailsSubmit = (detailsValue: UserDetails) => {
     setDetails(detailsValue);
-    const newStep: WizardStep = 'review';
+    const newStep: WizardStep = "review";
     setStep(newStep);
     onStepChange?.(newStep);
-    setError('');
+    setError("");
   };
 
   const handleBack = () => {
     let newStep: WizardStep = step;
-    if (step === 'verify') newStep = 'email';
-    if (step === 'details') newStep = 'verify';
-    if (step === 'review') newStep = 'details';
+    if (step === "verify") newStep = "email";
+    if (step === "details") newStep = "verify";
+    if (step === "review") newStep = "details";
     setStep(newStep);
     onStepChange?.(newStep);
-    setError('');
+    setError("");
   };
 
   return (
@@ -60,11 +60,11 @@ export function DataBrokerWizard({ onStepChange }: DataBrokerWizardProps) {
           </div>
         )}
 
-        {step === 'email' && (
+        {step === "email" && (
           <EmailStep onNext={handleEmailSubmit} setError={setError} />
         )}
 
-        {step === 'verify' && (
+        {step === "verify" && (
           <VerifyStep
             email={email}
             onNext={handleVerifySuccess}
@@ -73,7 +73,7 @@ export function DataBrokerWizard({ onStepChange }: DataBrokerWizardProps) {
           />
         )}
 
-        {step === 'details' && (
+        {step === "details" && (
           <DetailsStep
             email={email}
             onNext={handleDetailsSubmit}
@@ -82,7 +82,7 @@ export function DataBrokerWizard({ onStepChange }: DataBrokerWizardProps) {
           />
         )}
 
-        {step === 'review' && details && (
+        {step === "review" && details && (
           <ReviewStep
             email={email}
             details={details}

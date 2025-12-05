@@ -26,4 +26,4 @@ export interface SendEmailsResponse {
   error?: string;
 }
 
-export type WizardStep = 'email' | 'verify' | 'details' | 'review';
+export type WizardStep = "email" | "verify" | "details" | "review";

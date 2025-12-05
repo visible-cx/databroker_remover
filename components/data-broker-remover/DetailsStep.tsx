@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { UserDetails } from '@/lib/data-broker-remover/types';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { UserDetails } from "@/lib/data-broker-remover/types";
 
 interface DetailsStepProps {
   email: string;
@@ -15,16 +15,16 @@ interface DetailsStepProps {
 
 export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
   const [details, setDetails] = useState<UserDetails>({
-    name: '',
-    street: '',
-    city: '',
-    country: '',
-    postcode: '',
+    name: "",
+    street: "",
+    city: "",
+    country: "",
+    postcode: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     // Validate all fields are filled
     if (
@@ -34,7 +34,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
       !details.country ||
       !details.postcode
     ) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
       return;
     }
 
@@ -66,7 +66,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
             id="name"
             type="text"
             value={details.name}
-            onChange={(e) => handleChange('name', e.target.value)}
+            onChange={(e) => handleChange("name", e.target.value)}
             placeholder="John Doe"
             required
             className="bg-plum-800 border-plum-600 text-warmgray placeholder:text-warmgray/40"
@@ -81,7 +81,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
             id="street"
             type="text"
             value={details.street}
-            onChange={(e) => handleChange('street', e.target.value)}
+            onChange={(e) => handleChange("street", e.target.value)}
             placeholder="123 Main Street"
             required
             className="bg-plum-800 border-plum-600 text-warmgray placeholder:text-warmgray/40"
@@ -96,7 +96,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
             id="city"
             type="text"
             value={details.city}
-            onChange={(e) => handleChange('city', e.target.value)}
+            onChange={(e) => handleChange("city", e.target.value)}
             placeholder="New York"
             required
             className="bg-plum-800 border-plum-600 text-warmgray placeholder:text-warmgray/40"
@@ -111,7 +111,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
             id="country"
             type="text"
             value={details.country}
-            onChange={(e) => handleChange('country', e.target.value)}
+            onChange={(e) => handleChange("country", e.target.value)}
             placeholder="USA"
             required
             className="bg-plum-800 border-plum-600 text-warmgray placeholder:text-warmgray/40"
@@ -126,7 +126,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
             id="postcode"
             type="text"
             value={details.postcode}
-            onChange={(e) => handleChange('postcode', e.target.value)}
+            onChange={(e) => handleChange("postcode", e.target.value)}
             placeholder="10001"
             required
             className="bg-plum-800 border-plum-600 text-warmgray placeholder:text-warmgray/40"
@@ -142,11 +142,7 @@ export function DetailsStep({ onNext, onBack, setError }: DetailsStepProps) {
         >
           Back
         </Button>
-        <Button
-          type="submit"
-          variant="secondary"
-          className="flex-1"
-        >
+        <Button type="submit" variant="secondary" className="flex-1">
           Continue
         </Button>
       </div>

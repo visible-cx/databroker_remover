@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { sendVerificationCode } from '@/actions/data-broker-remover/send-code';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { sendVerificationCode } from "@/actions/data-broker-remover/send-code";
 
 interface EmailStepProps {
   onNext: (email: string) => void;
@@ -12,15 +12,15 @@ interface EmailStepProps {
 }
 
 export function EmailStep({ onNext, setError }: EmailStepProps) {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    if (!email || !email.includes('@')) {
-      setError('Please enter a valid email address');
+    if (!email || !email.includes("@")) {
+      setError("Please enter a valid email address");
       return;
     }
 
@@ -32,10 +32,10 @@ export function EmailStep({ onNext, setError }: EmailStepProps) {
       if (result.success) {
         onNext(email);
       } else {
-        setError(result.error || 'Failed to send verification code');
+        setError(result.error || "Failed to send verification code");
       }
     } catch (error) {
-      setError('An unexpected error occurred. Please try again.');
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +73,7 @@ export function EmailStep({ onNext, setError }: EmailStepProps) {
         disabled={isLoading}
         className="w-full bg-plum-600 hover:bg-plum-500 text-white"
       >
-        {isLoading ? 'Sending Code...' : 'Send Verification Code'}
+        {isLoading ? "Sending Code..." : "Send Verification Code"}
       </Button>
     </form>
   );

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { verifyCode } from '@/actions/data-broker-remover/verify-code';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { verifyCode } from "@/actions/data-broker-remover/verify-code";
 
 interface VerifyStepProps {
   email: string;
@@ -13,16 +13,21 @@ interface VerifyStepProps {
   setError: (error: string) => void;
 }
 
-export function VerifyStep({ email, onNext, onBack, setError }: VerifyStepProps) {
-  const [code, setCode] = useState('');
+export function VerifyStep({
+  email,
+  onNext,
+  onBack,
+  setError,
+}: VerifyStepProps) {
+  const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!code || code.length < 6) {
-      setError('Please enter the complete verification code');
+      setError("Please enter the complete verification code");
       return;
     }
 
@@ -34,10 +39,10 @@ export function VerifyStep({ email, onNext, onBack, setError }: VerifyStepProps)
       if (result.success) {
         onNext();
       } else {
-        setError(result.error || 'Invalid verification code');
+        setError(result.error || "Invalid verification code");
       }
     } catch (error) {
-      setError('An unexpected error occurred. Please try again.');
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -50,8 +55,8 @@ export function VerifyStep({ email, onNext, onBack, setError }: VerifyStepProps)
           Verify Your Email
         </h3>
         <p className="text-sm text-warmgray/70 mb-4">
-          We&apos;ve sent a verification code to <strong>{email}</strong>. Please
-          enter it below.
+          We&apos;ve sent a verification code to <strong>{email}</strong>.
+          Please enter it below.
         </p>
       </div>
 
@@ -85,9 +90,8 @@ export function VerifyStep({ email, onNext, onBack, setError }: VerifyStepProps)
           disabled={isLoading}
           variant="secondary"
           className="flex-1 border-plum-600 text-grey-500"
-
         >
-          {isLoading ? 'Verifying...' : 'Verify Code'}
+          {isLoading ? "Verifying..." : "Verify Code"}
         </Button>
       </div>
     </form>

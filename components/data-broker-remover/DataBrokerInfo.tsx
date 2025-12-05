@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import * as Collapsible from '@radix-ui/react-collapsible';
-import { BROKER_NAMES } from '@/lib/data-broker-remover/broker-list';
-import Link from 'next/link';
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { BROKER_NAMES } from "@/lib/data-broker-remover/broker-list";
+import Link from "next/link";
 
 const FAQ_ITEMS = [
   {
-    title: 'HOW DOES IT WORK?',
+    title: "HOW DOES IT WORK?",
     content: (
       <div className="space-y-3">
         <ol className="ml-5 list-decimal space-y-2 text-warmgray/80">
@@ -25,13 +25,13 @@ const FAQ_ITEMS = [
           </li>
           <li>
             Only your email address is stored once it has been hashed (SHA256),
-            and is deleted after 45 days. This is to ensure you don&apos;t send out
-            multiple emails within a short period of time. You&apos;re free to repeat
-            the process after 45 days.
+            and is deleted after 45 days. This is to ensure you don&apos;t send
+            out multiple emails within a short period of time. You&apos;re free
+            to repeat the process after 45 days.
           </li>
         </ol>
         <p className="text-warmgray/80 text-sm mt-4">
-          See the source code{' '}
+          See the source code{" "}
           <a
             href="https://github.com/visible-cx/visible"
             target="_blank"
@@ -40,8 +40,11 @@ const FAQ_ITEMS = [
           >
             here
           </a>
-          . The privacy policy for this tool can be found in our main{' '}
-          <Link href="/privacy" className="font-bold underline hover:text-warmgray">
+          . The privacy policy for this tool can be found in our main{" "}
+          <Link
+            href="/privacy"
+            className="font-bold underline hover:text-warmgray"
+          >
             privacy policy
           </Link>
           .
@@ -50,7 +53,7 @@ const FAQ_ITEMS = [
     ),
   },
   {
-    title: 'WHO ARE THE DATA BROKERS?',
+    title: "WHO ARE THE DATA BROKERS?",
     content: (
       <div className="space-y-3">
         <p className="text-warmgray/80">
@@ -67,13 +70,13 @@ const FAQ_ITEMS = [
     ),
   },
   {
-    title: 'WHO BUILT THIS?',
+    title: "WHO BUILT THIS?",
     content: (
       <div className="space-y-3 text-warmgray/80">
         <p>This tool was built by the team at Visible.</p>
         <p>
-          If you&apos;d like to see more of what we do, please consider joining the
-          community{' '}
+          If you&apos;d like to see more of what we do, please consider joining
+          the community{" "}
           <a
             href="https://www.visible.cx/join"
             target="_blank"
@@ -121,7 +124,7 @@ export function DataBrokerInfo() {
               </span>
               <ChevronDown
                 className={`w-5 h-5 text-warmgray transition-transform duration-200 ${
-                  isOpen ? 'transform rotate-180' : ''
+                  isOpen ? "transform rotate-180" : ""
                 }`}
               />
             </Collapsible.Trigger>

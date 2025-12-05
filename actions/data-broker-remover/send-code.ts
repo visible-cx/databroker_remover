@@ -1,21 +1,27 @@
-'use server';
+"use server";
 
-import { PutItemCommand, GetItemCommand } from '@aws-sdk/client-dynamodb';
-import { SendTemplatedEmailCommand } from '@aws-sdk/client-ses';
-import crypto from 'crypto';
-import dayjs from 'dayjs';
-import { getDynamoDBClient, getSESClient, getTableName } from '@/lib/data-broker-remover/aws-clients';
-import { SendCodeResponse } from '@/lib/data-broker-remover/types';
+import { PutItemCommand, GetItemCommand } from "@aws-sdk/client-dynamodb";
+import { SendTemplatedEmailCommand } from "@aws-sdk/client-ses";
+import crypto from "crypto";
+import dayjs from "dayjs";
+import {
+  getDynamoDBClient,
+  getSESClient,
+  getTableName,
+} from "@/lib/data-broker-remover/aws-clients";
+import { SendCodeResponse } from "@/lib/data-broker-remover/types";
 
-export async function sendVerificationCode(email: string): Promise<SendCodeResponse> {
+export async function sendVerificationCode(
+  email: string,
+): Promise<SendCodeResponse> {
   try {
     // Generate OTP code
-    const otpCode = crypto.randomBytes(6).toString('hex');
+    const otpCode = crypto.randomBytes(6).toString("hex");
 
     // Hash email for storage
-    const hash = crypto.createHash('sha256');
+    const hash = crypto.createHash("sha256");
     hash.update(email);
-    const hashedEmail = hash.digest('hex');
+    const hashedEmail = hash.digest("hex");
 
     const dynamoClient = getDynamoDBClient();
     const sesClient = getSESClient();
@@ -34,10 +40,10 @@ export async function sendVerificationCode(email: string): Promise<SendCodeRespo
 
     // Check if already sent within 45 days
     if (existingData.Item && existingData.Item.lastSent) {
-      const lastSent = parseInt(existingData.Item.lastSent.N || '0');
+      const lastSent = parseInt(existingData.Item.lastSent.N || "0");
       const now = dayjs();
       const lastSentDate = dayjs.unix(lastSent);
-      const daysSinceLastSent = now.diff(lastSentDate, 'day');
+      const daysSinceLastSent = now.diff(lastSentDate, "day");
 
       if (daysSinceLastSent < 45) {
         const daysRemaining = 45 - daysSinceLastSent;
@@ -69,8 +75,8 @@ export async function sendVerificationCode(email: string): Promise<SendCodeRespo
       Destination: {
         ToAddresses: [email],
       },
-      Source: 'noreply@visiblelabs.org',
-      Template: 'VerificationCode',
+      Source: "noreply@visiblelabs.org",
+      Template: "VerificationCode",
       TemplateData: JSON.stringify(templateData),
     };
 
@@ -79,10 +85,10 @@ export async function sendVerificationCode(email: string): Promise<SendCodeRespo
 
     return { success: true };
   } catch (error) {
-    console.error('Error sending verification code:', error);
+    console.error("Error sending verification code:", error);
     return {
       success: false,
-      error: 'Something went wrong. Please try again.',
+      error: "Something went wrong. Please try again.",
     };
   }
 }

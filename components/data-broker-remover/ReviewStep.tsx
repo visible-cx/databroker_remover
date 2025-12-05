@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { UserDetails } from '@/lib/data-broker-remover/types';
-import { sendEmails } from '@/actions/data-broker-remover/send-emails';
-import { CheckCircle2 } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { UserDetails } from "@/lib/data-broker-remover/types";
+import { sendEmails } from "@/actions/data-broker-remover/send-emails";
+import { CheckCircle2 } from "lucide-react";
 
 interface ReviewStepProps {
   email: string;
@@ -13,12 +13,17 @@ interface ReviewStepProps {
   setError: (error: string) => void;
 }
 
-export function ReviewStep({ email, details, onBack, setError }: ReviewStepProps) {
+export function ReviewStep({
+  email,
+  details,
+  onBack,
+  setError,
+}: ReviewStepProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
   const handleSubmit = async () => {
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
@@ -27,10 +32,10 @@ export function ReviewStep({ email, details, onBack, setError }: ReviewStepProps
       if (result.success) {
         setIsComplete(true);
       } else {
-        setError(result.error || 'Failed to send emails');
+        setError(result.error || "Failed to send emails");
       }
     } catch (error) {
-      setError('An unexpected error occurred. Please try again.');
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -47,8 +52,8 @@ export function ReviewStep({ email, details, onBack, setError }: ReviewStepProps
             Emails Sent Successfully!
           </h3>
           <p className="text-warmgray/70">
-            We&apos;ve sent removal requests to all data brokers. You&apos;ll be CC&apos;d
-            on all emails so you can track responses.
+            We&apos;ve sent removal requests to all data brokers. You&apos;ll be
+            CC&apos;d on all emails so you can track responses.
           </p>
           <p className="text-warmgray/70 mt-4 text-sm">
             Data brokers typically respond within 30-45 days. You may receive
@@ -94,8 +99,8 @@ export function ReviewStep({ email, details, onBack, setError }: ReviewStepProps
       <div className="bg-plum-800/50 border border-plum-600 rounded-lg p-4">
         <p className="text-sm text-warmgray/80">
           By clicking &quot;Send Requests&quot;, emails will be sent to all data
-          brokers requesting removal of your information. You will be CC&apos;d on
-          all emails.
+          brokers requesting removal of your information. You will be CC&apos;d
+          on all emails.
         </p>
       </div>
 
@@ -114,7 +119,7 @@ export function ReviewStep({ email, details, onBack, setError }: ReviewStepProps
           variant="secondary"
           className="flex-1"
         >
-          {isLoading ? 'Sending...' : 'Send Requests'}
+          {isLoading ? "Sending..." : "Send Requests"}
         </Button>
       </div>
     </div>

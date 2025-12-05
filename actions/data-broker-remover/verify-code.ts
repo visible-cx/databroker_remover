@@ -1,16 +1,22 @@
-'use server';
+"use server";
 
-import { GetItemCommand, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
-import crypto from 'crypto';
-import { getDynamoDBClient, getTableName } from '@/lib/data-broker-remover/aws-clients';
-import { VerifyCodeResponse } from '@/lib/data-broker-remover/types';
+import { GetItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import crypto from "crypto";
+import {
+  getDynamoDBClient,
+  getTableName,
+} from "@/lib/data-broker-remover/aws-clients";
+import { VerifyCodeResponse } from "@/lib/data-broker-remover/types";
 
-export async function verifyCode(email: string, code: string): Promise<VerifyCodeResponse> {
+export async function verifyCode(
+  email: string,
+  code: string,
+): Promise<VerifyCodeResponse> {
   try {
     // Hash email to match storage
-    const hash = crypto.createHash('sha256');
+    const hash = crypto.createHash("sha256");
     hash.update(email);
-    const hashedEmail = hash.digest('hex');
+    const hashedEmail = hash.digest("hex");
 
     const dynamoClient = getDynamoDBClient();
     const tableName = getTableName();
@@ -29,7 +35,7 @@ export async function verifyCode(email: string, code: string): Promise<VerifyCod
     if (!data.Item || !data.Item.code) {
       return {
         success: false,
-        error: 'Verification code not found. Please request a new code.',
+        error: "Verification code not found. Please request a new code.",
       };
     }
 
@@ -39,7 +45,7 @@ export async function verifyCode(email: string, code: string): Promise<VerifyCod
     if (storedCode !== code) {
       return {
         success: false,
-        error: 'Invalid verification code. Please try again.',
+        error: "Invalid verification code. Please try again.",
       };
     }
 
@@ -49,9 +55,9 @@ export async function verifyCode(email: string, code: string): Promise<VerifyCod
       Key: {
         id: { S: hashedEmail },
       },
-      UpdateExpression: 'SET verified = :verified',
+      UpdateExpression: "SET verified = :verified",
       ExpressionAttributeValues: {
-        ':verified': { BOOL: true },
+        ":verified": { BOOL: true },
       },
     };
 
@@ -60,10 +66,10 @@ export async function verifyCode(email: string, code: string): Promise<VerifyCod
 
     return { success: true };
   } catch (error) {
-    console.error('Error verifying code:', error);
+    console.error("Error verifying code:", error);
     return {
       success: false,
-      error: 'Something went wrong. Please try again.',
+      error: "Something went wrong. Please try again.",
     };
   }
 }
